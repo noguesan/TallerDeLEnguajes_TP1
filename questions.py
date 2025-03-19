@@ -26,35 +26,42 @@ answers = [   # answers es una lista de tuplas
 # Índice de la respuesta correcta para cada pregunta, en el mismo orden que las preguntas
 correct_answers_index = [1, 2, 0, 3, 1]
 
-# Variable para llevar el puntaje # B- Linea agregada
-score = 0  # B- Linea agregada
+# Variable para llevar el puntaje
+score = 0
 
-# El usuario deberá contestar 3 preguntas
-for _ in range(3):
-    # Se selecciona una pregunta aleatoria
-    question_index = random.randint(0, len(questions) - 1)
+# Seleccionar 3 preguntas al azar junto con sus respuestas y la respuesta correcta
+questions_to_ask = random.choices(list(zip(questions, answers, correct_answers_index)), k=3)  # C- Linea agregada
+"""
+* zip(questions, answers, correct_answers_index): Combina las tres listas (questions, answers y correct_answers_index)
+en una sola lista de tuplas.
+* list(zip(...)): Convierte el objeto zip en una lista, lo que permite que random.choices() pueda acceder a sus elementos
+* random.choices(..., k=3): Selecciona 3 elementos (preguntas) de la lista creada con zip.
+Con reemplazo: Esto significa que una misma pregunta podría ser seleccionada más de una vez en la partida.
+"""
 
-    # Se muestra la pregunta y las respuestas posibles
-    print(questions[question_index])
-    for i, answer in enumerate(answers[question_index]):
-        print(f"{i + 1}. {answer}")
+
+# Iterar sobre las preguntas seleccionadas
+for question, options, correct_index in questions_to_ask:  # C- Linea agregada
+    print(question)
+    for i, option in enumerate(options):
+        print(f"{i + 1}. {option}")
 
     # El usuario tiene 2 intentos para responder correctamente
     for intento in range(2):
         user_input = input("Respuesta: ")
 
         # Verificar si el input es un número y si está en el rango válido
-        if user_input.isdigit() and 1 <= int(user_input) <= len(answers[question_index]):
+        if user_input.isdigit() and 1 <= int(user_input) <= len(options):
             user_answer = int(user_input) - 1
 
             # Se verifica si la respuesta es correcta
-            if user_answer == correct_answers_index[question_index]:
+            if user_answer == correct_index:
                 print("¡Correcto!")
-                score += 1  # B- Linea agregada
+                score += 1
                 break
             else:
                 print("Incorrecto.")
-                score -= 0.5  # B- Linea agregada
+                score -= 0.5
         else:
             print("Respuesta no válida")
             break
@@ -62,10 +69,9 @@ for _ in range(3):
         # Si el usuario no responde correctamente después de 2 intentos,
         # se muestra la respuesta correcta
         print("Incorrecto. La respuesta correcta es:")
-        print(answers[question_index][correct_answers_index[question_index]])
+        print(options[correct_index])  # C- Linea agregada
 
-    # Se imprime un blanco al final de la pregunta
     print()
 
-# Mostrar el puntaje final # B- Linea agregada
-print(f"Puntaje final: {score}")  # B- Linea agregada
+# Mostrar el puntaje final
+print(f"Puntaje final: {score}")
