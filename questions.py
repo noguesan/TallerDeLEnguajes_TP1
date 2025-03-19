@@ -33,16 +33,30 @@ for _ in range(3):
 
     # Se muestra la pregunta y las respuestas posibles
     print(questions[question_index]) # imprime la pregunta aleatoria
-    for i, answer in enumerate(answers[question_index]):  #Enumerate: eitera sobre una secuencia ) para obtener tanto el índice como el valor de cada elemento en la iteración.
+    for i, answer in enumerate(answers[question_index]):  #Enumerate: itera sobre una secuencia para obtener tanto el índice como el valor de cada elemento en la iteración.
         print(f"{i + 1}. {answer}")
 
     # El usuario tiene 2 intentos para responder correctamente
     for intento in range(2): # range(2): genera una secuencia de números del 0 al 1
-        user_answer = int(input("Respuesta: ")) - 1
+        user_input = input("Respuesta: ")
 
-        # Se verifica si la respuesta es correcta
-        if user_answer == correct_answers_index[question_index]:
-            print("¡Correcto!")
+        # Verificar si el input es un número #LINEA AGREGADA
+        if user_input.isdigit(): #LINEA AGREGADA
+            user_answer = int(user_input) - 1  # Restamos 1 para ajustar a los índices de las respuestas
+
+            # Verificar si la respuesta está dentro del rango válido #LINEA AGREGADA
+            if user_answer >= 0 and user_answer < len(answers[question_index]): #LINEA AGREGADA
+                # Se verifica si la respuesta es correcta
+                if user_answer == correct_answers_index[question_index]:
+                    print("¡Correcto!")
+                    break
+                else:
+                    print("Incorrecto.")
+            else:
+                print("Respuesta no válida") #LINEA AGREGADA
+                break
+        else:
+            print("Respuesta no válida") #LINEA AGREGADA
             break
 
         """
@@ -52,12 +66,11 @@ for _ in range(3):
           Si el usuario no responde correctamente en los dos intentos, el bucle terminará sin que se ejecute un break, y se ejecutará
           el bloque else. Esto es lo que se usa para mostrar la respuesta correcta después de que los dos intentos hayan fallado.
         """
-
-    else: # pertenece al ciclo for
-      # Si el usuario no responde correctamente después de 2 intentos,
-      # se muestra la respuesta correcta
-      print("Incorrecto. La respuesta correcta es:")
-      print(answers[question_index][correct_answers_index[question_index]])
+    else:  # Este else pertenece al ciclo for
+        # Si el usuario no responde correctamente después de 2 intentos,
+        # se muestra la respuesta correcta
+        print("Incorrecto. La respuesta correcta es:")
+        print(answers[question_index][correct_answers_index[question_index]])
 
     # Se imprime un blanco al final de la pregunta
     print()
