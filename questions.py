@@ -30,13 +30,9 @@ correct_answers_index = [1, 2, 0, 3, 1]
 score = 0
 
 # Seleccionar 3 preguntas al azar junto con sus respuestas y la respuesta correcta
-questions_to_ask = random.choices(list(zip(questions, answers, correct_answers_index)), k=3)  # C- Linea agregada
+questions_to_ask = random.sample(list(zip(questions, answers, correct_answers_index)), k=3)  # D- Linea agregada
 """
-* zip(questions, answers, correct_answers_index): Combina las tres listas (questions, answers y correct_answers_index)
-en una sola lista de tuplas.
-* list(zip(...)): Convierte el objeto zip en una lista, lo que permite que random.choices() pueda acceder a sus elementos
-* random.choices(..., k=3): Selecciona 3 elementos (preguntas) de la lista creada con zip.
-Con reemplazo: Esto significa que una misma pregunta podría ser seleccionada más de una vez en la partida.
+random.sample() selecciona elementos aleatorios de una secuencia sin reemplazo, lo que significa que ninguna pregunta se repetirá en la partida.
 """
 
 
